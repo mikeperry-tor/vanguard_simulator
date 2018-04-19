@@ -1,7 +1,7 @@
 import logging
 import time
 
-import grapher
+#import grapher
 import topology
 import guard
 import adversary
@@ -70,14 +70,14 @@ class StatsCache(object):
         logging.warn("="*80)
         logging.warn(self.experiment_params)
 
-    def dump_stats(self):
+    def dump_stats(self, grapher):
         logging.warn("*" * 80)
-        self.graph_time_to_deanon()
-        self.graph_time_to_g2()
-        self.graph_time_to_g3()
+        self.graph_time_to_deanon(grapher)
+        self.graph_time_to_g2(grapher)
+        self.graph_time_to_g3(grapher)
 #        self.graph_remaining_g2_times()
 
-    def graph_time_to_deanon(self):
+    def graph_time_to_deanon(self, grapher):
         times_list = []
 
         for sim in self.simulation_runs:
@@ -91,7 +91,7 @@ class StatsCache(object):
                                     experiment_descr=self.experiment_descr,
                                     text_info=self.experiment_params)
 
-    def graph_time_to_g2(self):
+    def graph_time_to_g2(self, grapher):
         times_list = []
 
         for sim in self.simulation_runs:
@@ -106,7 +106,7 @@ class StatsCache(object):
                                     experiment_descr=self.experiment_descr,
                                     text_info=self.experiment_params)
 
-    def graph_time_to_g3(self):
+    def graph_time_to_g3(self, grapher):
         times_list = []
 
         for sim in self.simulation_runs:
@@ -121,7 +121,7 @@ class StatsCache(object):
                                     experiment_descr=self.experiment_descr,
                                     text_info=self.experiment_params)
 
-    def graph_remaining_g2_times(self):
+    def graph_remaining_g2_times(self, grapher):
         times_list = []
 
         for sim in self.simulation_runs:
@@ -135,3 +135,9 @@ class StatsCache(object):
         grapher.graph_remaining_g2_times(times_list,
                                          experiment_descr=self.experiment_descr,
                                          text_info=self.experiment_params)
+
+if __name__ == "__main__":
+  import grapher
+  import cPickle as pickle
+  stats = pickle.load(file("stats.pickle"))
+  stats.dump_stats(grapher)

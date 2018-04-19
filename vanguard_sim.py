@@ -4,6 +4,7 @@ import random
 import time
 import argparse
 import sys
+import cPickle as pickle
 
 import adversary
 import simulation
@@ -67,7 +68,8 @@ def start():
     # Dump the stats we've all been waiting for
     stats_cache.dump_experiment_parameters()
 
-    stats_cache.dump_stats()
+    pickle.dump(stats_cache, file("stats.pickle", "w"))
+    #stats_cache.dump_stats()
 
 def run_full_simulation(stats_cache, topology, sybil_model, pwnage_model):
     """
@@ -104,7 +106,7 @@ def main():
     logger.addHandler(hdlr)
 
     # Turn logging severity to 11
-    logging.getLogger("").setLevel(logging.DEBUG)
+    logging.getLogger("").setLevel(logging.WARN)
 
     start()
 
